@@ -95,3 +95,33 @@ export const CHARS = {
     'y': 34,
     'z': 35
 };
+
+export const SEPA_COUNTRIES = [
+    'FI',
+    'AD',
+    'AT',
+    'PT',
+    'BE',
+    'ES',
+    'CY',
+    'EE',
+    'FI',
+    'FR',
+    'DE',
+    'GI',
+    'GR',
+    'IE',
+    'IT',
+    'LV',
+    'LT',
+    'LU',
+    'PT',
+    'MT',
+    'MC',
+    'NL',
+    'PT',
+    'SM',
+    'SK',
+    'SI',
+    'ES',
+];

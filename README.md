@@ -33,6 +33,7 @@ public function fields(Request $request)
     return [
     
         NovaIbanField::make(__('IBAN'), 'iban'),
+          ->showDetails(), // shows the information given by IBAN (country and if it's sepa) on the resource detail page
         
     ];
 }
@@ -40,7 +41,8 @@ public function fields(Request $request)
 
 
 ## <h4>💡 Future ideas/implementations:</h4>
-* Block the submit in case the IBAN is not valid
 * Show the details provided by IBAN
 * Improve error handling
+* Improve validation
 * Add multiple languages ​​for validation
+* Show/hide toggle on index
