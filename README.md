@@ -33,8 +33,10 @@ public function fields(Request $request)
     return [
     
         NovaIbanField::make(__('IBAN'), 'iban'),
-          ->showDetails(), // shows the information given by IBAN (country and if it's sepa) on the resource detail page
-        
+          ->showDetails(), // shows the information given by IBAN on the resource detail page
+          ->hideActionsOnIndex() // hide the actions on the index (copy and show/hide)
+          ->alwaysHideOnIndex(), // "crypt" the iban in the index page (******)
+          
     ];
 }
 ```
@@ -44,5 +46,3 @@ public function fields(Request $request)
 * Show the details provided by IBAN
 * Improve error handling
 * Improve validation
-* Add multiple languages ​​for validation
-* Show/hide toggle on index

@@ -26,6 +26,26 @@ class NovaIbanField extends Field
     }
 
     /**
+     * Set IBAN always "crypted" on index
+     *
+     * @return $this
+    */
+    public function alwaysHideOnIndex()
+    {
+        return $this->withMeta(['alwaysHideOnIndex' => true]);
+    }
+
+    /**
+     * Hide actions on index(copy and show/hide)
+     *
+     * @return $this
+    */
+    public function hideActionsOnIndex()
+    {
+        return $this->withMeta(['hideActionsOnIndex' => true]);
+    }
+
+    /**
      * Hydrate the given attribute on the model based on the incoming request.
      *
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
@@ -37,8 +57,7 @@ class NovaIbanField extends Field
     public function fillAttributeFromRequest(NovaRequest $request, $requestAttribute, $model, $attribute)
     {
         if(!$this->validateIban($request[$requestAttribute])){
-            // TODO: translate this
-            throw new Exception(__("IBAN is not valid"));
+            throw new Exception(trans('messages::messages.iban_is_not_valid'));
         }else{
             if ($request->exists($requestAttribute)) {
                 $model->{$attribute} = $request[$requestAttribute];

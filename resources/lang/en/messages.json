@@ -4,6 +4,10 @@
     "country": "Country",
     "swift_bank_code": "BIC/SWIFT code",
     "sepa": "SEPA",
+    "Hide": "Hide",
+    "Show": "Show",
+    "Copy": "Copy",
+    "Copied": "Copied",
     
     "Afghanistan": "Afghanistan",
     "Åland Islands": "Åland Islands",

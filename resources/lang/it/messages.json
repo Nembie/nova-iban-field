@@ -4,6 +4,10 @@
     "country": "Stato",
     "swift_bank_code": "Codice BIC/SWIFT",
     "sepa": "SEPA",
+    "Hide": "Nascondi",
+    "Show": "Mostra",
+    "Copy": "Copia",
+    "Copied": "Copiato",
     
     "Afghanistan": "Afghanistan",
     "Åland Islands": "Isole Aland",
