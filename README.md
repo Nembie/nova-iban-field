@@ -32,17 +32,25 @@ public function fields(Request $request)
 {
     return [
     
-        NovaIbanField::make(__('IBAN'), 'iban'),
-          ->showDetails(), // shows the information given by IBAN on the resource detail page
-          ->hideActionsOnIndex() // hide the actions on the index (copy and show/hide)
-          ->alwaysHideOnIndex(), // "crypt" the iban in the index page (******)
+        NovaIbanField::make(__('Custom IBAN Label'), 'iban_column')->showDetails()
           
     ];
 }
 ```
 
+## 🧰 Methods
 
-## <h4>💡 Future ideas/implementations:</h4>
-* Show the details provided by IBAN
-* Improve error handling
-* Improve validation
+- `showDetails()` - shows the information given by IBAN on the resource detail page
+- `hideActionsOnIndex()` - hide the actions on the index (copy and show/hide)
+- `alwaysHideOnIndex()` - "crypt" the IBAN in the index page
+
+## 🌍 Supported countries
+
+[Full list of supported countries](https://github.com/Nembie/nova-iban-field/blob/master/COUNTRIES.md)
+
+
+## 🗒️ Note
+
+* This field only checks the formatting of the string, there is no check that the iban is actually valid and working.
+* Translations in Spanish, French and German were made with Google translate, they are probably wrong.
+  

@@ -67,25 +67,52 @@ class NovaIbanField extends Field
 
     protected function validateIban($iban)
     {
-        $iban = strtolower(str_replace(' ','',$iban));
-        $countries = ['al'=>28,'ad'=>24,'at'=>20,'az'=>28,'bh'=>22,'be'=>16,'ba'=>20,'br'=>29,'bg'=>22,'cr'=>21,'hr'=>21,'cy'=>28,'cz'=>24,'dk'=>18,'do'=>28,'ee'=>20,'fo'=>18,'fi'=>18,'fr'=>27,'ge'=>22,'de'=>22,'gi'=>23,'gr'=>27,'gl'=>18,'gt'=>28,'hu'=>28,'is'=>26,'ie'=>22,'il'=>23,'it'=>27,'jo'=>30,'kz'=>20,'kw'=>30,'lv'=>21,'lb'=>28,'li'=>21,'lt'=>20,'lu'=>20,'mk'=>19,'mt'=>31,'mr'=>27,'mu'=>30,'mc'=>27,'md'=>24,'me'=>22,'nl'=>18,'no'=>15,'pk'=>24,'ps'=>29,'pl'=>28,'pt'=>25,'qa'=>29,'ro'=>24,'sm'=>27,'sa'=>24,'rs'=>22,'sk'=>24,'si'=>19,'es'=>24,'se'=>24,'ch'=>21,'tn'=>24,'tr'=>26,'ae'=>23,'gb'=>22,'vg'=>24];
-        $chars = ['a'=>10,'b'=>11,'c'=>12,'d'=>13,'e'=>14,'f'=>15,'g'=>16,'h'=>17,'i'=>18,'j'=>19,'k'=>20,'l'=>21,'m'=>22,'n'=>23,'o'=>24,'p'=>25,'q'=>26,'r'=>27,'s'=>28,'t'=>29,'u'=>30,'v'=>31,'w'=>32,'x'=>33,'y'=>34,'z'=>35];
+        // Check if IBAN contains white space
+        if(preg_match('/\s/',$iban))
+            return false;
     
-        if(strlen($iban) == $countries[substr($iban,0,2)]){
-            $movedChar = substr($iban, 4).substr($iban,0,4);
-            $movedCharArray = str_split($movedChar);
-            $newString = "";
+        // Check if IBAN contains special characters
+        if (preg_match('/[\'^£$%&*()}{@#~?><>,|=_+¬-]/', $iban))
+            return false;
     
-            foreach($movedCharArray as $key => $value){
-                if(!is_numeric($movedCharArray[$key]))
-                    $movedCharArray[$key] = $chars[$movedCharArray[$key]];
-                $newString .= $movedCharArray[$key];
-            }
-            
-            if(bcmod($newString, '97') == 1)
-                return true;
-        }
-        return false;
-    }
+        // Get the rules by the country
+        $path = substr(__DIR__, 0, -3).'resources/js/countries.json';
+        $json = file_get_contents($path);
+        $json = json_decode($json, true);
+        $country = substr($iban, 0, 2);
+        if(isset($json['sepa'][$country]))
+            $countryObj = $json['sepa'][$country];
+        else if(isset($json['not_sepa'][$country]))
+            $countryObj = $json['not_sepa'][$country];
+        else
+            return false;
 
+        // Get validation rules
+        $rules = [];
+        foreach ($countryObj as $attr)
+            array_push($rules, $attr[1]);
+
+        $tempIban = $iban;
+        $hasError = false;
+        $ibanLength = 0;
+        foreach ($rules as $rule) {
+            $numbers = intval(preg_replace('/[^0-9]/', '', $rule));
+            $letter = preg_replace('/[^a-zA-Z]/', '', $rule);
+            $checkString = substr($tempIban, 0, $numbers);
+            $ibanLength = $ibanLength+$numbers;
+
+            // Check if the string part is of the correct type
+            if($letter === 'a' && !preg_match("/^[a-zA-Z]+$/", $checkString))
+                $hasError = true;
+            elseif($letter === 'n' && !preg_match("/^\d+$/", $checkString))
+                $hasError = true;
+
+            $tempIban = substr($tempIban, $numbers);
+        }
+
+        if($ibanLength != strlen($iban))
+            $hasError = true;
+
+        return !$hasError;
+    }
 }

@@ -30,7 +30,7 @@ export default {
 	props: ['resourceName', 'resourceId', 'field'],
 	data: function() {
 		return {
-			error: false
+			error: this.field.value ? !validateIban(this.field.value) : false
 		}
 	},
 	
