@@ -3,7 +3,7 @@
 </h2>
 
 <p align="center">
-  <strong>A simple field for Laravel Nova that validates the inserted IBANs.</strong>
+  <strong>A simple field for <a href="https://nova.laravel.com/">Laravel Nova</a> that validates IBANs.</strong>
 </p>
 
 <p align="center">
@@ -12,6 +12,9 @@
   </a>
   <a href="https://github.com/Nembie/nova-iban-field/pulls">
     <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs welcome!" />
+  </a>
+  <a href="https://packagist.org/packages/nembie/nova-iban-field">
+    <img src="https://img.shields.io/packagist/v/nembie/nova-iban-field" alt="Packagist Version">
   </a>
 </p>
 
@@ -52,5 +55,5 @@ public function fields(Request $request)
 ## 🗒️ Note
 
 * This field only checks the formatting of the string, there is no check that the iban is actually valid and working.
-* Translations in Spanish, French and German were made with Google translate, they are probably wrong.
+* German translation was done via google translate, it's probably wrong.
   
