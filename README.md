@@ -1,5 +1,5 @@
 <h2 align="center">
-    🏦 Laravel Nova IBAN Field
+    🏦 IBAN Field for Laravel Nova
 </h2>
 
 <p align="center">
@@ -50,6 +50,9 @@ public function fields(Request $request)
 ## 🌍 Supported countries
 
 [Full list of supported countries](https://github.com/Nembie/nova-iban-field/blob/master/COUNTRIES.md)
+
+## 🔺 Laravel Nova 4 Support
+[Read this comment.](https://github.com/Nembie/nova-iban-field/issues/2#issuecomment-1510111145)
 
 
 ## 🗒️ Note
